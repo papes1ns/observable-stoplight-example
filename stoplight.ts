@@ -1,23 +1,29 @@
-import { interval, Observable } from "rxjs";
+import { BehaviorSubject, interval, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
 type StoplightState = "green" | "yellow" | "red";
 
 export class Stoplight {
-  public states$: Observable<StoplightState>;
+  public states$: BehaviorSubject<StoplightState> = new BehaviorSubject(
+    "green"
+  );
 
   constructor() {
-    this.states$ = interval(3000).pipe(
+    interval(3000).pipe(
       map((i) => {
         switch (i % 3) {
           case 0:
-            return "green";
+            this.states$.next("green");
+            break;
           case 1:
-            return "yellow";
+            this.states$.next("yellow");
+            break;
           case 2:
-            return "red";
+            this.states$.next("red");
+            break;
           default:
-            return "red";
+            this.states$.next("red");
+            break;
         }
       })
     );
