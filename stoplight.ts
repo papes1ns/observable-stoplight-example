@@ -14,8 +14,7 @@ export class Stoplight {
       .pipe(
         startWith(counter),
         map(() => {
-          this.color$.next(this.colors[counter % 3]);
-          counter++;
+          this.color$.next(this.colors[counter++ % this.colors.length]);
         }),
         takeWhile(() => counter !== iterations)
       )
