@@ -10,12 +10,12 @@ describe("Stoplight", () => {
     });
   });
 
-  it("should cycle green, yellow, red", () => {
+  it("should cycle green -> yellow -> red -> green", () => {
     scheduler.run((helpers) => {
       const { expectObservable } = helpers;
       const stoplight = new Stoplight("green", 4);
-      // write the expected values, with 3 seconds between each value
-      // emitting a value advances time by 1 frame, so subtract 1ms for each time progression marble
+      // write the expected color with 3 seconds between each value
+      // note: emitting a value advances time by 1 frame, so subtract 1ms for each time progression marble
       const [expected1, sub1, expected2, sub2] = [
         "g 2999ms y 2999ms r 2999ms g",
         "^---------------------------",
