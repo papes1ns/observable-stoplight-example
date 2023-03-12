@@ -8,6 +8,7 @@ const motorists = [];
 
 light.getColor$().subscribe((state) => {
   motorists.unshift(new Motorist(light));
+  // using setTimeout to push the console.log to the end of the event loop to ensure the motorists have received the new state
   setTimeout(() => {
     console.log(
       `[${((iteration * 3000) / 1000)
@@ -16,6 +17,6 @@ light.getColor$().subscribe((state) => {
         (m) => m.state
       )}`
     );
+    iteration++;
   }, 0);
-  iteration++;
 });
