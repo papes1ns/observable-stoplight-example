@@ -1,31 +1,36 @@
-import { BehaviorSubject, interval, Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { BehaviorSubject, interval } from "rxjs";
+import { map, startWith, takeWhile } from "rxjs/operators";
 
-type StoplightState = "green" | "yellow" | "red";
+type StoplightColor = "green" | "yellow" | "red";
 
 export class Stoplight {
-  public states$: BehaviorSubject<StoplightState> = new BehaviorSubject(
-    "green"
-  );
+  public color$: BehaviorSubject<StoplightColor>;
 
-  constructor() {
-    interval(3000).pipe(
-      map((i) => {
-        switch (i % 3) {
-          case 0:
-            this.states$.next("green");
-            break;
-          case 1:
-            this.states$.next("yellow");
-            break;
-          case 2:
-            this.states$.next("red");
-            break;
-          default:
-            this.states$.next("red");
-            break;
-        }
-      })
-    );
+  constructor(initialColor: StoplightColor, iterations: number = -1) {
+    this.color$ = new BehaviorSubject<StoplightColor>(initialColor);
+    let counter = ["green", "yellow", "red"].indexOf(initialColor);
+    interval(3000)
+      .pipe(
+        startWith(counter),
+        map(() => {
+          switch (counter % 3) {
+            case 0:
+              this.color$.next("green");
+              break;
+            case 1:
+              this.color$.next("yellow");
+              break;
+            case 2:
+              this.color$.next("red");
+              break;
+            default:
+              this.color$.next("red");
+              break;
+          }
+          counter++;
+        }),
+        takeWhile(() => counter !== iterations)
+      )
+      .subscribe();
   }
 }
