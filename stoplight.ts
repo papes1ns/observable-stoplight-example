@@ -5,28 +5,16 @@ type StoplightColor = "green" | "yellow" | "red";
 
 export class Stoplight {
   private color$: BehaviorSubject<StoplightColor>;
+  private colors: StoplightColor[] = ["green", "yellow", "red"];
 
   constructor(initialColor: StoplightColor, iterations: number = -1) {
     this.color$ = new BehaviorSubject<StoplightColor>(initialColor);
-    let counter = ["green", "yellow", "red"].indexOf(initialColor);
+    let counter = this.colors.indexOf(initialColor);
     interval(3000)
       .pipe(
         startWith(counter),
         map(() => {
-          switch (counter % 3) {
-            case 0:
-              this.color$.next("green");
-              break;
-            case 1:
-              this.color$.next("yellow");
-              break;
-            case 2:
-              this.color$.next("red");
-              break;
-            default:
-              this.color$.next("red");
-              break;
-          }
+          this.color$.next(this.colors[counter % 3]);
           counter++;
         }),
         takeWhile(() => counter !== iterations)

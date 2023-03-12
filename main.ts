@@ -8,12 +8,14 @@ const motorists = [];
 
 light.getColor$().subscribe((state) => {
   motorists.unshift(new Motorist(light));
-  console.log(
-    `[${((iteration * 3000) / 1000)
-      .toString()
-      .padStart(3, "0")}s] obs1: ${state}, motorists: ${motorists.map(
-      (m) => m.state
-    )}`
-  );
+  setTimeout(() => {
+    console.log(
+      `[${((iteration * 3000) / 1000)
+        .toString()
+        .padStart(3, "0")}s] color: ${state}, motorists: ${motorists.map(
+        (m) => m.state
+      )}`
+    );
+  }, 0);
   iteration++;
 });
