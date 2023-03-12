@@ -23,13 +23,13 @@ describe("Stoplight", () => {
         "3000ms   ^------------------",
       ];
 
-      expectObservable(stoplight.color$, sub1).toBe(expected1, {
+      expectObservable(stoplight.getColor$(), sub1).toBe(expected1, {
         g: "green",
         y: "yellow",
         r: "red",
       });
 
-      expectObservable(stoplight.color$, sub2).toBe(expected2, {
+      expectObservable(stoplight.getColor$(), sub2).toBe(expected2, {
         g: "green",
         y: "yellow",
         r: "red",

@@ -1,10 +1,10 @@
-import { BehaviorSubject, interval } from "rxjs";
+import { BehaviorSubject, interval, Observable } from "rxjs";
 import { map, startWith, takeWhile } from "rxjs/operators";
 
 type StoplightColor = "green" | "yellow" | "red";
 
 export class Stoplight {
-  public color$: BehaviorSubject<StoplightColor>;
+  private color$: BehaviorSubject<StoplightColor>;
 
   constructor(initialColor: StoplightColor, iterations: number = -1) {
     this.color$ = new BehaviorSubject<StoplightColor>(initialColor);
@@ -32,5 +32,9 @@ export class Stoplight {
         takeWhile(() => counter !== iterations)
       )
       .subscribe();
+  }
+
+  public getColor$(): Observable<StoplightColor> {
+    return this.color$.asObservable();
   }
 }

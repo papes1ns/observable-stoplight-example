@@ -11,7 +11,7 @@ const motorists = [
   new Motorist(light),
 ];
 
-light.color$.subscribe((state) => {
+light.getColor$().subscribe((state) => {
   console.log(
     `[${((iteration * 3000) / 1000)
       .toString()
