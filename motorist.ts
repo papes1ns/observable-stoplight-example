@@ -6,7 +6,7 @@ export class Motorist {
   public state: MotoristState = "stopped";
 
   constructor(stoplight: Stoplight) {
-    stoplight.color$.subscribe((color) => {
+    stoplight.getColor$().subscribe((color) => {
       switch (color) {
         case "green":
           this.state = "driving";
