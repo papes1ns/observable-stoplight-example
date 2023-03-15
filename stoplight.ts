@@ -9,14 +9,15 @@ export class Stoplight {
 
   constructor(initialColor: StoplightColor, iterations: number = -1) {
     this.color$ = new BehaviorSubject<StoplightColor>(initialColor);
-    let counter = colors.indexOf(initialColor);
+    let colorCounter = colors.indexOf(initialColor) || 0;
+    let iterationsCounter = 1;
     interval(3000)
       .pipe(
-        startWith(counter),
+        startWith(colorCounter),
         map(() => {
-          this.color$.next(colors[counter++ % colors.length]);
+          this.color$.next(colors[colorCounter++ % colors.length]);
         }),
-        takeWhile(() => counter !== iterations)
+        takeWhile(() => iterationsCounter++ !== iterations)
       )
       .subscribe();
   }
