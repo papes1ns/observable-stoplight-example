@@ -19,8 +19,8 @@ describe("Stoplight", () => {
       const [expected1, sub1, expected2, sub2] = [
         "g 2999ms y 2999ms r 2999ms g",
         "^---------------------------",
-        "3000ms   y 2999ms r 2999ms g",
-        "3000ms   ^------------------",
+        "3500ms   y 2499ms r 2999ms g",
+        "3500ms   ^------------------",
       ];
 
       expectObservable(stoplight.getColor$(), sub1).toBe(expected1, {
