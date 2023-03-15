@@ -7,9 +7,9 @@ type StoplightColor = typeof colors[number];
 export class Stoplight {
   private color$: BehaviorSubject<StoplightColor>;
 
-  constructor(initialColor: StoplightColor, iterations: number = -1) {
+  constructor(initialColor: StoplightColor, iterations: number = 0) {
     this.color$ = new BehaviorSubject<StoplightColor>(initialColor);
-    let colorCounter = colors.indexOf(initialColor) || 0;
+    let colorCounter = colors.indexOf(initialColor);
     let iterationsCounter = 1;
     interval(3000)
       .pipe(
